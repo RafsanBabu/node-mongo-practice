@@ -27,7 +27,7 @@
             const container = document.getElementById('products');
             data.forEach(pd => {
                 const item = document.createElement('P');
-                item.innerHTML=`${pd.name} <button onclick="deleteProduct('${pd._id}')">Delete</button>`;
+                item.innerHTML=`${pd.name} <button onclick="deleteProduct(event,'${pd._id}')">Delete</button>`;
                 container.appendChild(item);
 
             });
@@ -35,14 +35,17 @@
         })
         }
         loadProducts();
-        function deleteProduct(id){
+        function deleteProduct(event,id){
             console.log(id);
             fetch(`/delete/${id}`,{
                 method: 'DELETE',
             })
             .then(res => res.json())
             .then(result => {
-                console.log("deleted successfully")
+                //console.log("deleted successfully")
+                if(result){
+                    event.target.parentNode.style.display='none';
+                }
             })
         }
         
